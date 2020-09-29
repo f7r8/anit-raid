@@ -9,7 +9,9 @@
 - Repl: [![Run on Repl.it](https://repl.it/badge/github/HELLMAKER0001/Alt-Detector)](https://repl.it/github/Darkboy-js/anit-raid)
 
 ## ✨ Contributors
-Contributions are always welcomed :D
+- Contributions are always welcomed :D
+- Coded By ! Darkboy🍭#9966
+
 <a href="https://github.com/Darkboy-js/anit-raid">
   <img src="https://cdn.discordapp.com/avatars/697279777974911077/7aef2c8514f059c424c6f41a355ea707.webp?size=256" />
 </a>
