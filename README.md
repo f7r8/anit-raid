@@ -14,5 +14,4 @@ Contributions are always welcomed :D
   <img src="https://cdn.discordapp.com/avatars/697279777974911077/7aef2c8514f059c424c6f41a355ea707.webp?size=256" />
 </a>
 
-Made with :heart
-- [Support Guild](https://discord.gg/6gzkUNq)
+ - [Support Guild](https://discord.gg/6gzkUNq)
