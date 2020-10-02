@@ -2,27 +2,40 @@ const Discord = require("discord.js")
 const db = require("quick.db")
  const ms = require('parse-ms');
 const { truncate } = require("fs");
+const fs = require('fs')
+const yaml = require("js-yaml");
+const { mainprefix , token , status , dpunishment } = yaml.load(fs.readFileSync("./config.yml"));
+
 module.exports = {
     name: "config",
     description: "set guild anit raid config",
     run: async (client, message, args) => {
     let cmd = args[0];
+    if(message.author.id === message.guild.ownerID) {
+    
+    
     const guildicon = message.guild.iconURL();
     if(!cmd) {
         const embed = new Discord.MessageEmbed()
         .setAuthor(message.author.tag,message.author.displayAvatarURL())
         .setDescription(`
-        ** Available Keys**
-   > **config setrolecreatelimt
-   > conifg setactionlogs
-   > config setroledeletelimt
-   > config setchannelcreatelimt
-   > config setchanneldeletelimt
-   > config setbanlimts
-   > config setkicklimts
-  > config clearuser
-   > config show**     
-   `)
+        » ** Role Protection**
+        ${mainprefix}config setrolecreatelimt <number>
+       ${mainprefix}config setroledeletelimt <number>  
+ 
+        » ** Channel Protection**
+         ${mainprefix}config setchannelcreatelimt <number>
+         ${mainprefix}config setchanneldeletelimt <number>
+
+       » ** Members Protection**
+         ${mainprefix}config setbanlimts <number>
+         ${mainprefix}config setkicklimts <number>
+    
+        » ** Others Protections**
+        ${mainprefix}config setactionlogs <#channel>
+        ${mainprefix}config show
+        ${mainprefix}config setpunishment <roleremove/kick/ban>
+     `)
  .setFooter(message.guild.name, guildicon)
   return message.channel.send(embed);
 }
@@ -43,10 +56,13 @@ module.exports = {
   if(banlimts === null) banlimts = "Disabled :x:"
   let kicklimts = db.get(`kicklimts_${message.guild.id}`)
   if(kicklimts === null) kicklimts = "Disabled :x:"
-
+  let punishment = db.get(`punishment_${message.guild.id}`)
+  if(dpunishment === null) dpunishment = "None"
+  if(punishment === null) punishment = dpunishment
    let showembed = new Discord.MessageEmbed()
 
    .setAuthor(message.author.username, message.author.displayAvatarURL())
+   .setTitle(`⚙️ ${message.guild.name} Config   `)
    .addField('Role Create Limts', rolelimt, true)
    .addField('Role Delete Limts', roledelete, true)
    .addField(`Aciton Logs Channel`, logschannel, true)
@@ -54,6 +70,7 @@ module.exports = {
    .addField(`Channel Delete Limts`, channeldeletelimts, true)
    .addField(`Ban Limts`, banlimts, true)
    .addField(`Kick Limts`, kicklimts, true)
+   .addField(`Punishment`, punishment, true)
     .setFooter(message.guild.name, guildicon)
     return message.channel.send(showembed);
  }
@@ -191,7 +208,7 @@ if(cmd.toLowerCase() === 'setbanlimts') {
   db.set(`banlimts_${message.guild.id}`, rolecreate)
   let done = new Discord.MessageEmbed() 
   .setAuthor(message.author.username, message.author.displayAvatarURL())
-  .setDescription(`Done Channel Ban Limts Has Been Set To ${rolecreate} ✅`)
+  .setDescription(`Done Ban Limts Has Been Set To ${rolecreate} ✅`)
   .setFooter(message.guild.name, guildicon)
   return message.channel.send(done);
 }
@@ -215,7 +232,7 @@ if(cmd.toLowerCase() === 'setkicklimnts') {
   db.set(`kicklimts_${message.guild.id}`, rolecreate)
   let done = new Discord.MessageEmbed() 
   .setAuthor(message.author.username, message.author.displayAvatarURL())
-  .setDescription(`Done Channel Kick Limts Has Been Set To ${rolecreate} ✅`)
+  .setDescription(`Done Kick Limts Has Been Set To ${rolecreate} ✅`)
   .setFooter(message.guild.name, guildicon)
   return message.channel.send(done);
 }
@@ -232,5 +249,42 @@ db.delete(`executer_${message.guild.id}_${user.id}_channelcreate`)
 db.delete(`executer_${message.guild.id}_${user.id}_channeldelete`)
 return message.channel.send(`Reseted User Limts`);
 }
+ if(cmd.toLowerCase() === 'setpunishment') {
+   let argsp = args[1];
+   let embed = new Discord.MessageEmbed()
+    .setAuthor(message.author.username, message.author.displayAvatarURL())
+    .setDescription(`
+    Punishment List:
+    **kick**,**roleremove**,**ban**
+    `)
+    .setFooter(message.guild.name, guildicon)
+
+   if(!argsp) return message.channel.send(embed)
+
+   if(argsp.toLowerCase() === 'kick') {
+let embed = new Discord.MessageEmbed()
+    .setAuthor(message.author.username, message.author.displayAvatarURL())
+    .setDescription(`Punishment Was Changed to **Kick**`)
+    .setFooter(message.guild.name, guildicon)
+db.set(`punishment_${message.guild.id}`, 'kick')
+return message.channel.send(embed)
+   }
+   if(argsp.toLowerCase() === 'ban') {
+    let embed = new Discord.MessageEmbed()
+    .setAuthor(message.author.username, message.author.displayAvatarURL())
+    .setDescription(`Punishment Was Changed to **ban**`)
+    .setFooter(message.guild.name, guildicon)
+db.set(`punishment_${message.guild.id}`, 'ban')
+return message.channel.send(embed)
+   }
+  if(argsp.toLowerCase() === 'roleremove') {
+    let embed = new Discord.MessageEmbed()
+    .setAuthor(message.author.username, message.author.displayAvatarURL())
+    .setDescription(`Punishment Was Changed to **roleremove**`)
+    .setFooter(message.guild.name, guildicon)
+db.set(`punishment_${message.guild.id}`, 'roleremove')
+return message.channel.send(embed)
+
+  } 
+    }}
 }}
- 
