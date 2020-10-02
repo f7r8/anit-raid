@@ -2,8 +2,8 @@ const Discord = require("discord.js")
 const db = require("quick.db")
  const ms = require('parse-ms')
 module.exports = {
-    name: "trustedlist",
-    description: "Vouch Users",
+    name: "whitelist-list",
+    description: "Shows Whitelist-list",
     run: async (client, message, args) => {
         let guild = message.guild.iconURL()
    
@@ -17,7 +17,7 @@ module.exports = {
               array.push(`<@${m.user}>`)
             })
          
-            wordlist.addField('** Trusted List **', `${array.join("\n")}`)
+            wordlist.addField('** WhiteList **', `${array.join("\n")}`)
         }
         return message.channel.send(wordlist);
 }}
