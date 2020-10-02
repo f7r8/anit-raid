@@ -13,8 +13,7 @@ module.exports = {
     let cmd = args[0];
     if(message.author.id === message.guild.ownerID) {
     
-    
-    const guildicon = message.guild.iconURL();
+     const guildicon = message.guild.iconURL();
     if(!cmd) {
         const embed = new Discord.MessageEmbed()
         .setAuthor(message.author.tag,message.author.displayAvatarURL())
@@ -33,6 +32,7 @@ module.exports = {
     
         » ** Others Protections**
         ${mainprefix}config setactionlogs <#channel>
+        ${mainprefix}config clearuser @user
         ${mainprefix}config show
         ${mainprefix}config setpunishment <roleremove/kick/ban>
      `)
@@ -108,17 +108,17 @@ if(cmd.toLowerCase() === 'setroledeletelimt') {
   
     return message.channel.send(missing);
   }
-  if(isNaN(rolecreate)) {
+  if(isNaN(roledelete)) {
     let missing = new Discord.MessageEmbed()
     .setAuthor(message.author.username, message.author.displayAvatarURL())
     .setDescription(`** an invaild usage (Cannot be words only numbers)**\nconfig setroledeletelimt (number)`)
     .setFooter(message.guild.name, guildicon)
   return message.channel.send(missing);
   }
-  db.set(`roledeletelimts_${message.guild.id}`, rolecreate)
+  db.set(`roledeletelimts_${message.guild.id}`, roledelete)
   let done = new Discord.MessageEmbed() 
   .setAuthor(message.author.username, message.author.displayAvatarURL())
-  .setDescription(`Done SetRoleDelete Limts Has Been Set To ${rolecreate} ✅`)
+  .setDescription(`Done SetRoleDelete Limts Has Been Set To ${roledelete} ✅`)
   .setFooter(message.guild.name, guildicon)
   return message.channel.send(done);
   
@@ -212,7 +212,7 @@ if(cmd.toLowerCase() === 'setbanlimts') {
   .setFooter(message.guild.name, guildicon)
   return message.channel.send(done);
 }
-if(cmd.toLowerCase() === 'setkicklimnts') {
+if(cmd.toLowerCase() === 'setkicklimts') {
   let rolecreate = args.slice(1).join(" ");
   if(!rolecreate) {
    let missing = new Discord.MessageEmbed()
@@ -287,4 +287,5 @@ return message.channel.send(embed)
 
   } 
     }}
-}}
+return message.channel.send(`typo! only ownership can use that command!`)
+    }}
