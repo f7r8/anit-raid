@@ -1,2 +1,6 @@
-mainprefix: '' ## bot preifx
-token: '' ## Bot Token
+mainprefix: ''
+token: ''
+status: ''
+dpunishment: 'roleremove'  ## ITS WILL GIVES ERROR IF THIS WAS EMPTY!
+### dpunishment >> DEFALUT punishment  
+### [punishment List:] 'roleremove', 'ban', 'kick'
