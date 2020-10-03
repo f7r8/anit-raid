@@ -3,7 +3,7 @@ const db = require("quick.db")
  const ms = require('parse-ms');
 const { truncate } = require("fs");
 module.exports = {
-    name: "uhitelist",
+    name: "unwhitelist",
     description: "set guild anit raid config",
     run: async (client, message, args) => {
 
