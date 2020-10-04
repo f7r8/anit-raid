@@ -11,9 +11,9 @@ module.exports = {
     description: "set guild anit raid config",
     run: async (client, message, args) => {
     let cmd = args[0];
-    if(message.author.id === message.guild.ownerID) {
+   if(message.author.id === message.guild.ownerID) {    
     
-     const guildicon = message.guild.iconURL();
+    const guildicon = message.guild.iconURL();
     if(!cmd) {
         const embed = new Discord.MessageEmbed()
         .setAuthor(message.author.tag,message.author.displayAvatarURL())
@@ -286,6 +286,9 @@ db.set(`punishment_${message.guild.id}`, 'roleremove')
 return message.channel.send(embed)
 
   } 
-    }}
-return message.channel.send(`typo! only ownership can use that command!`)
-    }}
+   
+    }
+  return;
+  }
+  return message.channel.send(new Discord.MessageEmbed().setTitle(`Only Guild OwnerShip Can Use That Command!`))
+}}
